@@ -1,0 +1,77 @@
+openapi: "3.0.0"
+info:
+  title: "Words"
+  description: "Get words' definitions"
+  version: 1.0.0
+servers:
+  - url: "https://api.dictionaryapi.dev/"
+paths:
+  /api/v2/entries/ru/{word}:
+    get:
+      tags:
+      - "Words"
+      summary: "Get information about a word"
+      description: "Provide information on the requested word"
+      parameters:
+        - name: word 
+          in: path
+          required: true
+          example: "дом"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Word'
+components:
+  schemas:
+    Word:
+      type: object
+      properties: 
+        word: 
+          type: string
+          nullable: false
+        phonetics: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Phonetics'
+        meanings: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Meanings'
+    Phonetics:
+      type: object
+      properties: 
+        text: 
+          type: string
+        audio: 
+          type: string
+    Meanings:
+      type: object
+      properties: 
+        partOfSpeech: 
+          type: string
+        definitions: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Definitions'     
+    Definitions:
+      type: object
+      properties: 
+        definition: 
+          type: string
+        example: 
+          type: string
+        synonyms: 
+          type: array
+          items: 
+            type: string
+        antonyms: 
+          type: array
+          items: 
+            type: string
+          
+          
